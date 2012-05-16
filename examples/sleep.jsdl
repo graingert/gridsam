@@ -1,0 +1,13 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+    	<JobIdentification>
+            <JobProject>gridsam</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/sleep</Executable>
+                <Argument>5</Argument>
+            </POSIXApplication>
+        </Application>
+    </JobDescription>
+</JobDefinition>

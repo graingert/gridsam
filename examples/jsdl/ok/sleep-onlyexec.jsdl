@@ -1,0 +1,18 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>sleep job</JobName>
+            <Description>sleep job description</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>sleep 20; echo job is run by `whoami` in working dir `pwd` at `date` on `hostname`;</Executable>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+            </POSIXApplication>
+        </Application>
+    </JobDescription>
+</JobDefinition>
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+`hostname` > out.txt
+#sleep 1000m
+hostname

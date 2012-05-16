@@ -1,0 +1,4 @@
+#!/bin/sh
+hostname
+sleep 1000m
+hostname

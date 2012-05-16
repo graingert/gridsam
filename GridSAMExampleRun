@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export OMII_CLIENT_HOME=.
+export ENDORSED=-Djava.endorsed.dirs="${OMII_CLIENT_HOME}/endorsed"
+export MY_CLASSPATH=.:${OMII_CLIENT_HOME}/lib:${OMII_CLIENT_HOME}/conf:
+for j in `ls ${OMII_CLIENT_HOME}/lib/*.jar`; do
+    MY_CLASSPATH=${MY_CLASSPATH}:${j}
+done
+
+echo Run the GridSAM client example...
+java ${ENDORSED} -cp ${MY_CLASSPATH} -Dftp.server="localhost:55521" -Dgridsam.server="http://localhost:8080/gridsam/services/gridsam?wsdl" GridSAMExample

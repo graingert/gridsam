@@ -1,0 +1,28 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/sleep</Executable>
+                <Argument>120</Argument>
+                <Output>stdout.txt</Output>
+
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/stdout.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+    <myproxy:MyProxy xmlns:myproxy="urn:gridsam:myproxy">
+        <myproxy:ProxyServer>myproxy.ncsa.uiuc.edu</myproxy:ProxyServer>
+        <myproxy:ProxyServerDN>/C=US/O=National Center for Supercomputing Applications/CN=bosco.ncsa.uiuc.edu</myproxy:ProxyServerDN>
+        <myproxy:ProxyServerPort>7512</myproxy:ProxyServerPort>
+        <myproxy:ProxyServerUserName>myuser</myproxy:ProxyServerUserName>
+        <myproxy:ProxyServerPassPhrase>mypass</myproxy:ProxyServerPassPhrase>
+        <myproxy:ProxyServerLifetime>7512</myproxy:ProxyServerLifetime>
+    </myproxy:MyProxy>
+</JobDefinition>

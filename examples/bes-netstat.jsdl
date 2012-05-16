@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+  <JobDescription>
+    <JobIdentification>
+      <JobName>netstat</JobName>
+      <JobProject>GridSAM(BES)</JobProject>
+    </JobIdentification>
+    <Application>
+      <HPCProfileApplication xmlns="http://schemas.ggf.org/jsdl/2006/07/jsdl-hpcpa">
+        <Executable>/bin/netstat</Executable>
+        <Argument>-rn</Argument>
+        <Output>netstat.out</Output>
+        <Error>netstat.err</Error>
+        <WorkingDirectory>/tmp/bes_netstat_output</WorkingDirectory>
+      </HPCProfileApplication>
+    </Application>
+    <Resources>
+      <TotalCPUCount>
+        <Exact>1</Exact>
+      </TotalCPUCount>
+    </Resources>
+  </JobDescription>
+</JobDefinition>

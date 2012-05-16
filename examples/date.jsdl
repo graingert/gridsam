@@ -1,0 +1,19 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/date</Executable>
+                <Argument>-u</Argument>
+                <Output>stdout.txt</Output>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://gridsam.lesc.doc.ic.ac.uk:45521/public/test.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>

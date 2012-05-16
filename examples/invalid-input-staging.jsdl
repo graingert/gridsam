@@ -1,0 +1,11 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <DataStaging>
+            <FileName>dir1/file1.txt</FileName>
+            <CreationFlag >overwrite</CreationFlag>
+            <Source>
+                <URI>urn:unknown-urn:iamfeelinglucky</URI>
+            </Source>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>

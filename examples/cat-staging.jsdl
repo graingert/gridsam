@@ -1,0 +1,40 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>cat job</JobName>
+            <Description>cat job description</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/cat</Executable>
+                <Argument>dir1/file1.txt dir2/subdir1/file2.txt</Argument>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>dir1/file1.txt</FileName>
+            <CreationFlag >overwrite</CreationFlag>
+            <Source>
+                <URI>http://gridsam.sourceforge.net/test_data/download/helloworld.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>dir2/subdir1/file2.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/input-file.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/stdout.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription> 
+</JobDefinition>

@@ -1,0 +1,18 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <DataStaging>
+            <FileName>dir1/file1.txt</FileName>
+            <CreationFlag >overwrite</CreationFlag>
+            <Source>
+                <URI>http://gridsam.sourceforge.net/test_data/download/helloworld.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>dir1/file1.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>file:///tmp/purestaging.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription> 
+</JobDefinition>

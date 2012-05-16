@@ -1,0 +1,35 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>big input file grep job</JobName>
+            <Description>a grep job with big input file</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>cp big_input_file.txt result.txt; echo job is run by `whoami` in working dir `pwd` at `date`;</Executable>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+                <Environment name="ENV1">big_input_file.txt</Environment>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>big_input_file.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+	    <DeleteOnTermination>true</DeleteOnTermination>
+            <Source>
+                <URI>ftp://omii:omii@10.61.0.218/opt/gridsam_ictcondor_test/ictcondor_test_jsdl/testfile/more_big_input_file.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>result.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://gos:vega123@10.61.0.219/opt/gridsam_ictcondor_test/more_big_cat_result.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>
+

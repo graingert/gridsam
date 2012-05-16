@@ -1,0 +1,13 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>invalid job</JobName>
+            <Description>invalid job description</Description>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>some-unknown-executable</Executable>
+            </POSIXApplication>
+        </Application>
+    </JobDescription>
+</JobDefinition>

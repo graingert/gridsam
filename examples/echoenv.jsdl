@@ -1,0 +1,36 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>bin/echo-env</Executable>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+                <Environment name="ENV1">hello</Environment>
+                <Environment name="ENV2">world</Environment>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>bin/echo-env</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+                <URI>http://gridsam.sourceforge.net/test_data/bin/echo-env</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://anonymous:anonymous@example-ftp-server.com/public/output/echo-env.txt</URI>
+            </Target>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stderr.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://anonymous:anonymous@example-ftp-server.com/public/output/stderr.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>

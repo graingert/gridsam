@@ -1,0 +1,41 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>cat job</JobName>
+            <Description>cat job description</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/cat $ENV1 $ENV2; echo job is run by `whoami` in working dir `pwd` at `date` on `hostname`;</Executable>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+                <Environment name="ENV1">file1.txt</Environment>
+                <Environment name="ENV2">file2.txt</Environment>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>file1.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+		<URI>ftp://omii:omii@10.61.0.218/opt/gridsam_ictcondor_test/ictcondor_test_jsdl/testfile/file1.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>file2.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+		<URI>ftp://omii:omii@10.61.0.218/opt/gridsam_ictcondor_test/ictcondor_test_jsdl/testfile/file2.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>ftp://omii:omii@10.61.0.218/opt/gridsam_ictcondor_test/ictcondor_test_jsdl/testfile/cat_env_ictcondor_result.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>
+

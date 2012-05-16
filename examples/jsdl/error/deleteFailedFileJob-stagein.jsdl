@@ -1,0 +1,44 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>cat job</JobName>
+            <Description>cat job description</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable> echo job is run by `whoami` in working dir `pwd` at `date` on `hostname` >result.txt</Executable>
+            </POSIXApplication>
+        </Application>
+	<DataStaging>
+            <FileName>1G_http_stage_in</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+                <URI>http://orion.omii.ac.uk:8080/stage-in/1G</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>1G_ftp_stage_in</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+                <URI>ftp://omii:omii75@orion.omii.ac.uk/home/omii/stage-in/1G</URI>
+            </Source>
+        </DataStaging>
+	 <DataStaging>
+            <FileName>localstage_in</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+                <URI>ftp://omii:omii75@orion.omii.ac.uk/home/omii/stage-in/filenotExist</URI>
+            </Source>
+        </DataStaging>
+	<DataStaging>
+            <FileName>result.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>file:///home/gos/stage-out/no-permission-stagein.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/echo</Executable>
+                <Argument>hello world</Argument>
+                <Output>stdout.txt</Output>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>unknown-file.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/subdir/output-file.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>

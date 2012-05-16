@@ -1,0 +1,41 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>cat job</JobName>
+            <Description>cat job description</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/bin/catxx $ENV1 $ENV2</Executable>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+                <Environment name="ENV1">dir1/file1.txt</Environment>
+                <Environment name="ENV2">dir2/subdir1/file2.txt</Environment>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>dir1/file1.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+		<URI>ftp://ftpuser:ftpuser@orion.omii.ac.uk/home/ftpuser/testfile/file1.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>dir2/subdir1/file2.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+		<URI>ftp://ftpuser:ftpuser@orion.omii.ac.uk/home/ftpuser/testfile/file2.txt</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>ftp://ftpuser:ftpuser@orion.omii.ac.uk/home/ftpuser/testfile/cat_env_result.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>
+

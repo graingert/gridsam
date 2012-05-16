@@ -1,0 +1,26 @@
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <DataStaging>
+            <FileName>dir1/file1.txt</FileName>
+            <CreationFlag >overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Source>
+                <URI>http://gridsam.sourceforge.net/test_data/download/helloworld.txt</URI>
+            </Source>
+            <Target>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/file-purestaging-1.txt</URI>
+            </Target>
+        </DataStaging>
+        <DataStaging>
+            <FileName>dir2/subdir1/file2.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Source>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/input/file.txt</URI>
+            </Source>
+            <Target>
+                <URI>ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/file-purestaging-2.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>

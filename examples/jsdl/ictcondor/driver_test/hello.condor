@@ -1,0 +1,9 @@
+Executable=/home/gos/condortest/testall/hello.origin
+Universe=vanilla
+#Output=/home/gos/condortest/testall/hello.condor.o
+#Error=/home/gos/condortest/testall/hello.condor.e
+#Log=/home/gos/condortest/testall/hello.condor.log
+Should_transfer_files=YES
+When_to_transfer_output=ON_EXIT
+Requirements=(MaxHosts>=1)&&(Cpus>=1)
+Queue
