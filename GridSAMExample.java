@@ -64,9 +64,9 @@ public class GridSAMExample {
 			db = dbf.newDocumentBuilder();
 			Document jsdl = db.parse(in);
 			
-			$(jsdl).find("#execName").text(execName);
-			$(jsdl).find("#args").text(args);
-			$(jsdl).find("URI.ftp").text(ftpServer);
+			$(jsdl).find("#execName").text(execName).removeAttr("id");
+			$(jsdl).find("#args").text(args).removeAttr("id");
+			$(jsdl).find("URI.ftp").text(ftpServer).removeAttr("class");
 			
 		    DOMImplementationLS domImplementation = (DOMImplementationLS) jsdl.getImplementation();
 		    LSSerializer lsSerializer = domImplementation.createLSSerializer();
