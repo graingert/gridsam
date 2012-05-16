@@ -20,7 +20,7 @@
             <CreationFlag>overwrite</CreationFlag>
             <DeleteOnTermination>true</DeleteOnTermination>
             <Target>
-                <URI class="ftp">ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/file.txt</URI>
+                <URI>ftp://anonymous:anonymous@127.0.0.1:55521/stdout.txt</URI>
             </Target>
         </DataStaging>
         <DataStaging>
@@ -28,7 +28,7 @@
             <CreationFlag>overwrite</CreationFlag>
             <DeleteOnTermination>true</DeleteOnTermination>
             <Target>
-                <URI class="ftp">ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/file.txt</URI>
+                <URI>ftp://anonymous:anonymous@127.0.0.1:55521/stderr.txt</URI>
             </Target>
         </DataStaging>
     </JobDescription>
