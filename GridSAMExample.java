@@ -20,8 +20,6 @@ import org.xml.sax.SAXException;
 
 import org.apache.xmlbeans.XmlException; 
 
-import uk.co.graingert.gridsam.mapreduce.PosixJSDLCreator;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -60,7 +58,7 @@ public class GridSAMExample {
 	private static String createJSDLDescription(String execName, String args) {
 		String s_jsdl = "";
 		try {
-			InputStream in = PosixJSDLCreator.class.getResourceAsStream("posix.jsdl");
+			InputStream in = GridSAMExample.class.getResourceAsStream("posix.jsdl");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db;
 			db = dbf.newDocumentBuilder();
