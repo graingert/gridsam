@@ -61,10 +61,16 @@ public class GridSAMExample {
 
 		int lastPrintedJobStageIndex = 0;
 		while (true){
-			Iterator<JobStage> it = jobManager.findJobInstance(jobID).getJobStages().listIterator(lastPrintedJobStageIndex);
+			JobInstance job = jobManager.findJobInstance(jobID)
+
+			Iterator<JobStage> it = job.getJobStages().listIterator(lastPrintedJobStageIndex);
 			while(it.hasNext()){
 				System.out.printLn(it.next());
 				lastPrintedJobStageIndex++;
+			}
+
+			if (job.getLastKnownStage().getState().isTerminal()){
+				break;
 			}
 		}
 
