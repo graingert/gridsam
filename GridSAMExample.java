@@ -56,7 +56,13 @@ public class GridSAMExample {
 		// Get and report the status of job until complete
 		System.out.println("Job ID: " + jobID);
 
-		// ...
+		
+		while (true){
+			System.out.println(jobManager.findJobInstance(jobID).getLastKnownStage().getState());
+		}
+
+
+
 	}
 
 	private static String createJSDLDescription(String execName, String args) {
@@ -70,7 +76,7 @@ public class GridSAMExample {
 			
 			$(jsdl).find("#execName").text(execName).removeAttr("id");
 			$(jsdl).find("#args").text(args).removeAttr("id");
-						
+
 		    DOMImplementationLS domImplementation = (DOMImplementationLS) jsdl.getImplementation();
 		    LSSerializer lsSerializer = domImplementation.createLSSerializer();
 		    s_jsdl = lsSerializer.writeToString(jsdl); 
