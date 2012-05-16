@@ -70,7 +70,7 @@ public class GridSAMExample {
 			
 			$(jsdl).find("#execName").text(execName).removeAttr("id");
 			$(jsdl).find("#args").text(args).removeAttr("id");
-			$(jsdl).find("URI.ftp").text("ftp://@" + ftpServer).removeAttr("class");
+			$(jsdl).find("URI.ftp").text("ftp://anonymous:anonymous@127.0.0.1:55521").removeAttr("class");
 			
 		    DOMImplementationLS domImplementation = (DOMImplementationLS) jsdl.getImplementation();
 		    LSSerializer lsSerializer = domImplementation.createLSSerializer();
