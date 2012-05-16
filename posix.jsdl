@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <JobIdentification>
+            <JobName>cat job</JobName>
+            <Description>cat job description</Description>
+            <JobAnnotation>no annotation</JobAnnotation>
+            <JobProject>gridsam project</JobProject>
+        </JobIdentification>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable id="execName">/bin/cat</Executable>
+                <Argument id="args">dir1/file1.txt</Argument>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+            </POSIXApplication>
+        </Application>
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI class="ftp">ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/file.txt</URI>
+            </Target>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stderr.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <DeleteOnTermination>true</DeleteOnTermination>
+            <Target>
+                <URI class="ftp">ftp://anonymous:anonymous@gridsam.lesc.doc.ic.ac.uk:45521/public/output/file.txt</URI>
+            </Target>
+        </DataStaging>
+    </JobDescription>
+</JobDefinition>
