@@ -1,14 +1,17 @@
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Iterator;
+
 
 import org.icenigrid.gridsam.client.common.ClientSideJobManager;
 
 import org.icenigrid.gridsam.core.JobInstance;
 import org.icenigrid.gridsam.core.JobManagerException;
+import org.icenigrid.gridsam.core.JobStage;
 import org.icenigrid.gridsam.core.SubmissionException;
 import org.icenigrid.gridsam.core.UnknownJobException;
 import org.icenigrid.gridsam.core.UnsupportedFeatureException;
-import org.icenigrid.gridsam.core.jsdl.JSDLSupport;
 import org.icenigrid.schema.jsdl.y2005.m11.JobDefinitionDocument;
 
 import org.w3c.dom.Document;
@@ -56,9 +59,13 @@ public class GridSAMExample {
 		// Get and report the status of job until complete
 		System.out.println("Job ID: " + jobID);
 
-		
+		int lastPrintedJobStageIndex = 0;
 		while (true){
-			System.out.println(jobManager.findJobInstance(jobID).getLastKnownStage().getState());
+			Iterator<JobStage> it = jobManager.findJobInstance(jobID).getJobStages().listIterator(lastPrintedJobStageIndex);
+			while(it.hasNext()){
+				System.out.printLn(it.next());
+				lastPrintedJobStageIndex++;
+			}
 		}
 
 
