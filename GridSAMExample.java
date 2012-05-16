@@ -41,7 +41,7 @@ public class GridSAMExample {
 			ClientSideJobManager.getStandardOptions());
 
 		System.out.println("Creating JSDL description...");
-		String xJSDLString  = createJSDLDescription("/bin/sort", "/etc/hosts");
+		String xJSDLString  = createJSDLDescription("/usr/bin/sort", "/etc/hosts");
 		JobDefinitionDocument xJSDLDocument =
 			JobDefinitionDocument.Factory.parse(xJSDLString);
 
