@@ -42,7 +42,7 @@ public class GridSAMExample {
 	private static String ftpServer = System.getProperty("ftp.server");
 	private static String gridsamServer = System.getProperty("gridsam.server");
 	private static ClientSideJobManager jobManager;
-	private static String theWord = "and";
+	private static String theWord = "the";
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args)
@@ -55,8 +55,8 @@ public class GridSAMExample {
 			ClientSideJobManager.getStandardOptions());
 
 		ArrayList<File> files = new ArrayList<File>();
-		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
-		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file1.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file2.txt"));
 		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
 		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
 
