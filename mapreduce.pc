@@ -1,0 +1,86 @@
+Function MapReduce(inputList, mapFunction, reduceFunction)
+	intermediateList = Map(inputList, mapFunction)
+	finalResultsList = Reduce(intermediateList, reduceFunction)
+	
+	Return finalResultsList
+End Function
+
+Function GridSamMap(inputList)
+	outputList = new List
+	jobList = new List
+	hostedFileLocList = new List
+	
+	For Each (fileName, fileLocation) In inputList
+		#gridSubmit must return the jobID
+		
+		hostedInputFileLocation = gridCopyToDataServer(filename/fileLocation)
+
+		jobID = gridSubmit("/bin/grep", "-cw <the word> " + hostedInputFileLocation)
+		Add jobID to jobList
+		Add hostedInputFileLocation to hostedFileLocList
+	Next
+
+	While not JobsDone(JobList)
+		pass
+	Next
+
+	For Each fileLoc in HostedFileLocList
+		Add gridCopyFromDataServer(hostedOutputFileLocation) to outputList
+	Next
+
+	return outputList
+End Function
+
+
+Function JobsDone(jobList)
+	For Each jobID In jobList
+		If not gridJobFinished(jobID)
+			return false
+		End If
+	Next
+	return true
+End Function
+
+
+Function Map(inputList, mapFunction)
+	outputList = new List
+	
+	# Apply mapFunction to each fileName/fileLocation in inputList
+	# output to outputList
+	For Each (fileName, fileLocation) In inputList
+		(fileName, wordCount) = mapFunction(fileName, fileLocation)
+		Add (fileName, wordCount) To outputList
+	Next
+	Return outputList
+End Function
+
+Function Reduce(intermediateList, reduceFunction)
+	groupList = new List
+	outputList = new List
+	
+	# Group together value elements in intermediateList by their key
+	# output to groupList
+	For Each (fileName, wordCount) In intermediateList
+
+		# If it can be found in groupList, add to its groupList total
+		found = false
+		For Each (s_fileName, s_wordCountList) In groupList
+			If (fileName = s_fileName) Then
+				Replace (s_fileName, s_wordCountList) In groupList
+					With (s_fileName, s_wordCountList + [s_wordCount])
+				found = true
+			End If
+		Next
+
+		# If it can’t be found in groupList, add it to groupList
+		If Not Found Then Add (fileName, [wordCount]) To groupList
+	Next
+	
+	# Apply reduceFunction to each key/value pair in groupList
+	# output to outputList
+	For Each (fileName, wordCountList) In groupList
+		totalCount = reduceFunction(fileName, wordCountList)
+		Add (fileName, totalCount) To outputList
+	Next
+	Return outputList
+End Function
