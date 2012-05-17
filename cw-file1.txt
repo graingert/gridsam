@@ -1,0 +1,4 @@
+OMII-UK provides and supports free, open-source software to enable a sustained future for the UK e-Research community.
+We help new users to get started with e-Research, we provide the software that researchers need from our extensive catalogue and we support all of our software through our helpdesk.
+We constantly improve the provision of e-Research software by commissioning developers to create software that meets the needs of the research community.
+Our involvement in various projects, committees and standards groups helps us to direct the development of e-Research and maintain our cutting-edge position in the field.

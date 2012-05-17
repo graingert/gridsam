@@ -1,0 +1,1 @@
+OMII-UK provides free, open-source software to the e-Research community. OMII-UK's software covers a wide range of e-Research functionality: everything from management of data and information, videoconferencing and the execution of workflows and jobs. We also provide the infrastructure on which other software can be based.
