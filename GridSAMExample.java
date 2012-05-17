@@ -34,6 +34,7 @@ public class GridSAMExample {
 	private static String ftpServer = System.getProperty("ftp.server");
 	private static String gridsamServer = System.getProperty("gridsam.server");
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args)
 		throws JobManagerException, SubmissionException, UnsupportedFeatureException, UnknownJobException,
 			IOException, XmlException, InterruptedException {
@@ -60,22 +61,22 @@ public class GridSAMExample {
 		System.out.println("Job ID: " + jobID);
 
 		int lastPrintedJobStageIndex = 0;
+		
 		while (true){
-			JobInstance job = jobManager.findJobInstance(jobID)
+			JobInstance real_job = jobManager.findJobInstance(jobID);
+			List<JobStage> stageList = (List<JobStage>) real_job.getJobStages();
 
-			Iterator<JobStage> it = job.getJobStages().listIterator(lastPrintedJobStageIndex);
-			while(it.hasNext()){
-				System.out.printLn(it.next());
-				lastPrintedJobStageIndex++;
+			if ((stageList.size()-1) > lastPrintedJobStageIndex){
+				for (;lastPrintedJobStageIndex < stageList.size(); lastPrintedJobStageIndex++){
+					JobStage jobStage = stageList.get(lastPrintedJobStageIndex);
+					System.out.println(jobStage);
+				}
 			}
 
-			if (job.getLastKnownStage().getState().isTerminal()){
+			if (real_job.getLastKnownStage().getState().isTerminal()){
 				break;
 			}
 		}
-
-
-
 	}
 
 	private static String createJSDLDescription(String execName, String args) {
