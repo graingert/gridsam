@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import org.icenigrid.gridsam.client.common.ClientSideJobManager;
@@ -53,19 +55,32 @@ public class GridSAMExample {
 			ClientSideJobManager.getStandardOptions());
 
 		ArrayList<File> files = new ArrayList<File>();
-		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file1.txt"));
-		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file2.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
 		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
 
 		System.out.println(MapReduce(files));
 	}
 
-	public static int MapReduce(List<File> inputList){
-		List<String> intermediateList = GridSamMap(inputList);
+	public static Map<File, Integer> MapReduce(List<File> inputList){
+		Map<File, List<String>> intermediateList = GridSamMap(inputList);
 		return reduce(intermediateList);
 	}
 
-	public static int reduce(List<String> list){
+	public static Map<File, Integer> reduce(Map<File, List<String>> intermediateMap){
+		Map<File, Integer> outputMap = new HashMap<File,Integer>();
+		for (Map.Entry<File,List<String>> entry : intermediateMap.entrySet()){
+			int total = reduceFunction(entry.getValue());
+			outputMap.put(entry.getKey(), new Integer(total));
+		}
+		return outputMap;
+	}
+
+
+
+
+	public static int reduceFunction(List<String> list){
 		int totalCount = 0;
 		for (String str : list){
 			totalCount += Integer.parseInt(str.replaceAll("\\s",""));
@@ -73,10 +88,10 @@ public class GridSAMExample {
 		return totalCount;
 	}
 
-	public static List<String> GridSamMap(List<File> inputList){
-		List<String> outputList = new ArrayList<String>();
+	public static Map<File, List<String>> GridSamMap(List<File> inputList){
+		Map<File, List<String>> outputMap = new HashMap<File,List<String>>();
 		List<String> jobList = new ArrayList<String>();
-		List<File> outputFile = new ArrayList<File>();
+		Map<File, File> realToOutputMap = new HashMap<File,File>();
 
 		
 		for (File file : inputList){
@@ -86,7 +101,7 @@ public class GridSAMExample {
 
 
 				File tmp = File.createTempFile("output", null, new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/examples/"));
-				outputFile.add(tmp);
+				realToOutputMap.put(file,tmp);
 
 				String ftpName = "ftp://anonymous:anonymous@127.0.0.1:55521/" + tmp.getName();
 
@@ -110,11 +125,17 @@ public class GridSAMExample {
 
 		}
 
-		for(File file : outputFile){
-			outputList.add(gridCopyFromDataServer(file));
+		//Add all the items to the output Map.
+		//Using a map here saves time later
+		for(File file : inputList){
+			if (!outputMap.containsKey(file)){
+				outputMap.put(file, new ArrayList<String>());
+			}
+
+			outputMap.get(file).add(gridCopyFromDataServer(realToOutputMap.get(file)));
 		}
 
-		return outputList;
+		return outputMap;
 	}
 
 
