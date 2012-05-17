@@ -1,6 +1,9 @@
+import java.lang.Integer;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -23,9 +26,12 @@ import org.xml.sax.SAXException;
 
 import org.apache.xmlbeans.XmlException; 
 
+import org.apache.commons.io.FileUtils;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 
 import static org.joox.JOOX.$;
 
@@ -33,6 +39,8 @@ public class GridSAMExample {
 
 	private static String ftpServer = System.getProperty("ftp.server");
 	private static String gridsamServer = System.getProperty("gridsam.server");
+	private static ClientSideJobManager jobManager;
+	private static String theWord = "and";
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args)
@@ -40,46 +48,142 @@ public class GridSAMExample {
 			IOException, XmlException, InterruptedException {
 		
 		System.out.println("Creating a new client Job Manager...");
-		ClientSideJobManager jobManager = new ClientSideJobManager(
+		jobManager = new ClientSideJobManager(
 			new String[] { "-s", gridsamServer },
 			ClientSideJobManager.getStandardOptions());
 
-		System.out.println("Creating JSDL description...");
-		String xJSDLString  = createJSDLDescription("/bin/echo", "Hello World!");
-		
+		ArrayList<File> files = new ArrayList<File>();
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file1.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file2.txt"));
+		files.add(new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/cw-file3.txt"));
 
-		System.out.println(xJSDLString);
-
-		JobDefinitionDocument xJSDLDocument =
-			JobDefinitionDocument.Factory.parse(xJSDLString);
-
-		System.out.println("Submitting job to Job Manager...");
-		JobInstance job = jobManager.submitJob(xJSDLDocument);
-		String jobID = job.getID();
-
-		// Get and report the status of job until complete
-		System.out.println("Job ID: " + jobID);
-
-		int lastPrintedJobStageIndex = 0;
-		
-		while (true){
-			JobInstance real_job = jobManager.findJobInstance(jobID);
-			List<JobStage> stageList = (List<JobStage>) real_job.getJobStages();
-
-			if ((stageList.size()-1) > lastPrintedJobStageIndex){
-				for (;lastPrintedJobStageIndex < stageList.size(); lastPrintedJobStageIndex++){
-					JobStage jobStage = stageList.get(lastPrintedJobStageIndex);
-					System.out.println(jobStage);
-				}
-			}
-
-			if (real_job.getLastKnownStage().getState().isTerminal()){
-				break;
-			}
-		}
+		System.out.println(MapReduce(files));
 	}
 
-	private static String createJSDLDescription(String execName, String args) {
+	public static int MapReduce(List<File> inputList){
+		List<String> intermediateList = GridSamMap(inputList);
+		return reduce(intermediateList);
+	}
+
+	public static int reduce(List<String> list){
+		int totalCount = 0;
+		for (String str : list){
+			totalCount += Integer.parseInt(str.replaceAll("\\s",""));
+		}
+		return totalCount;
+	}
+
+	public static List<String> GridSamMap(List<File> inputList){
+		List<String> outputList = new ArrayList<String>();
+		List<String> jobList = new ArrayList<String>();
+		List<File> outputFile = new ArrayList<File>();
+
+		
+		for (File file : inputList){
+			
+
+			try {
+
+
+				File tmp = File.createTempFile("output", null, new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/examples/"));
+				outputFile.add(tmp);
+
+				String ftpName = "ftp://anonymous:anonymous@127.0.0.1:55521/" + tmp.getName();
+
+
+				File hostedInputFileLocation = gridCopyToDataServer(file);
+
+				String jobID = gridSubmit("/bin/grep", "-cw " + theWord + " " + hostedInputFileLocation, ftpName);
+				jobList.add(jobID);
+
+
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+
+
+		}
+
+		while (!JobsDone(jobList)){
+
+		}
+
+		for(File file : outputFile){
+			outputList.add(gridCopyFromDataServer(file));
+		}
+
+		return outputList;
+	}
+
+
+	private static boolean JobsDone(List<String> jobList){
+		for (String jobID : jobList){
+			if (!gridJobFinished(jobID)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static File gridCopyToDataServer(File file){
+		try {
+			File tmp = File.createTempFile("input", null, new File("/home/tag1g09/projects/lsds/gridsam-2.3.0-client/examples/"));
+			FileUtils.copyFile(file, tmp);
+			return tmp;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new File("");
+	}
+
+	private static String gridCopyFromDataServer(File file){
+		try{
+			return FileUtils.readFileToString(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	private static String gridSubmit(String execName, String args, String ftpName){
+		try{
+			String xJSDLString  = createJSDLDescription(execName, args, ftpName);
+
+			JobDefinitionDocument xJSDLDocument =
+				JobDefinitionDocument.Factory.parse(xJSDLString);
+
+			JobInstance job = jobManager.submitJob(xJSDLDocument);
+			System.out.println(job.getID());
+			return job.getID();
+		} catch (XmlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	private static boolean gridJobFinished(String jobID){
+		try{
+			JobInstance job = jobManager.findJobInstance(jobID);
+			return job.getLastKnownStage().getState().isTerminal();
+		} catch (Exception e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	private static String createJSDLDescription(String execName, String args, String ftpName) {
 		String s_jsdl = "";
 		try {
 			InputStream in = GridSAMExample.class.getResourceAsStream("posix.jsdl");
@@ -90,6 +194,8 @@ public class GridSAMExample {
 			
 			$(jsdl).find("#execName").text(execName).removeAttr("id");
 			$(jsdl).find("#args").text(args).removeAttr("id");
+			$(jsdl).find("#ftpName").text(ftpName).removeAttr("id");
+
 
 		    DOMImplementationLS domImplementation = (DOMImplementationLS) jsdl.getImplementation();
 		    LSSerializer lsSerializer = domImplementation.createLSSerializer();

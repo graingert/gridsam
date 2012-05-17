@@ -20,7 +20,7 @@
             <CreationFlag>overwrite</CreationFlag>
             <DeleteOnTermination>true</DeleteOnTermination>
             <Target>
-                <URI>ftp://anonymous:anonymous@127.0.0.1:55521/stdout.txt</URI>
+                <URI id="ftpName">ftp://anonymous:anonymous@127.0.0.1:55521/stdout.txt</URI>
             </Target>
         </DataStaging>
         <DataStaging>
